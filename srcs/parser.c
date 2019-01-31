@@ -8,7 +8,7 @@ void check_options(char *options, char *current)
     while(current[i] != '\0')
     {
         if (current[i] == 'l')
-            options[0]= '1';
+            options[0] = '1';
         else if (current[i] == 'R')
             options[1] = '1';
         else if (current[i] == 'a')

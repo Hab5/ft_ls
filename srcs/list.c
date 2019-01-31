@@ -7,8 +7,8 @@ void printlist(t_node* head)
     cursor = head;
     while(cursor != NULL)
     {
+       if(cursor->name)
         ft_putstr(cursor->name);
-        //printf("%lld", cursor->st_size);
         ft_putstr("\n");
         cursor = cursor->next;
     }
@@ -19,7 +19,7 @@ void push(t_node** head_ref, char *name)
 { 
     t_node* new_node; 
     new_node = (t_node*)malloc(sizeof(t_node)); 
-    new_node->name = name; 
+    new_node->name = ft_strdup(name); 
     new_node->next = (*head_ref);  
     (*head_ref) = new_node;   
 }

@@ -12,6 +12,9 @@
 #include <time.h>
 #include "../libft/libft.h"
 
+# define MAJOR(x)((int32_t)(((u_int32_t)(x) >> 24) & 0xff))
+# define MINOR(x)((int32_t)((x) & 0xffffff))
+
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 typedef struct timespec	t_time;
@@ -54,10 +57,12 @@ void FrontBackSplit(t_node* source, t_node** frontRef, t_node** backRef);
 void print_access(t_stat st);
 void print_id(t_pwd *pwd, t_grp *grp, t_stat st);
 void print_date(char *ctime);
+void print_minmajor(t_node *cursor, int size);
+void print_link(t_node *head);
 void print_long(t_node *cursor, char *filename);
 void print_all_long(t_node *head, char path[]);
 
-void get_path(char path[], char *filename);
+char *get_path(char path[], char *filename);
 void flags_error(char *current, int i);
 void outputdirname(t_node *cursor);
 

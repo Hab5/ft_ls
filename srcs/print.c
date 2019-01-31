@@ -59,27 +59,64 @@ void print_date(char *ctime)
     ft_putstr(" ");
 }
 
+void print_minmajor(t_node *cursor, int size)
+{
+	int		min;
+	int		maj;
+
+	if (S_ISCHR(cursor->st.st_mode) || S_ISBLK(cursor->st.st_mode)) 
+    {
+        maj = major(cursor->st.st_rdev);
+        min = minor(cursor->st.st_rdev);
+    }
+    ft_putnbr(major(cursor->st.st_rdev));
+    ft_putstr(", ");
+    ft_putnbr(minor(cursor->st.st_rdev));
+}
+
+void print_link(t_node *head)
+{
+	char	buf[256];
+	int		len;
+
+	ft_putstr(head->name);
+	ft_putstr(" -> ");
+	len = readlink(head->path, buf, sizeof(buf));
+	buf[len] = '\0';
+	ft_putendl(buf);
+}
+
 void print_long(t_node *cursor, char *filename)
 {
-    stat(filename, &cursor->st);
+    lstat(filename, &cursor->st);
     print_access(cursor->st);
     ft_putstr(ft_itoa(cursor->st.st_nlink));
     ft_putstr(" ");
     print_id(cursor->pwd, cursor->grp, cursor->st);
-    ft_putstr(ft_itoa(cursor->st.st_size));
+    if(S_ISCHR(cursor->st.st_mode) || S_ISBLK(cursor->st.st_mode))
+        print_minmajor(cursor, cursor->st.st_size);
+    else
+        ft_putstr(ft_itoa(cursor->st.st_size));
     ft_putstr(" ");
     print_date(ctime(&cursor->st.st_mtime));
+    if(S_ISLNK(cursor->st.st_mode))
+        print_link(cursor);
     ft_putstr(cursor->name);
     ft_putstr("\n");
 }
 
 void print_all_long(t_node *head, char path[])
 {
-	t_node *lstcursor; 
+	t_node *lstcursor;
+    char *filepath;
 	lstcursor = head;
-	while(lstcursor != NULL)
+    while(lstcursor != NULL)
 	{
-		print_long(lstcursor, path);
+        lstcursor->path = malloc(strlen(path) + strlen(lstcursor->name) + 1);
+        ft_strcpy(lstcursor->path, path);
+        ft_strcat(lstcursor->path, lstcursor->name);
+        //printf("%s\n", lstcursor->path);
+		print_long(lstcursor, lstcursor->path);
 		lstcursor = lstcursor->next;
 	}
 }

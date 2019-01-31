@@ -1,11 +1,11 @@
 #include "../include/ft_ls.h"
 
-void get_path(char path[], char *filename)
+char *get_path(char path[], char *filename)
 {
 	ft_strcat(path, filename);
 	ft_strcat(path, "/");
 	printf("\n%s\n", path);
-
+	return(path);
 }
 
 t_node *fill_list(t_node *stack, t_node *head, char options[])
@@ -14,6 +14,7 @@ t_node *fill_list(t_node *stack, t_node *head, char options[])
     DIR *dir;
     
 	dir = opendir(stack->name);
+	deleteList(&head);
 	if(options[2] != 0)
     {
 		while ((dirent = readdir(dir)) != NULL)
@@ -29,6 +30,7 @@ t_node *fill_list(t_node *stack, t_node *head, char options[])
 				push(&head, dirent->d_name);
 		}
 	}
+	//printlist(head);
 	return (head);
 }
 
@@ -74,6 +76,7 @@ int main(int argc, char **argv)
 	stack = sort_param(argc, argv, stack, options);// at this point, stack contains files
 	stack = clean_stack(stack, &head); // not anymore
 	head = output_filestack(head, options);
+	head = fill_list(stack, head, options);
 	print_stack(stack, head, options, path);
     printf("\noptions : %c, %c, %c, %c, %c\n", options[0], options[1], options[2], options[3], options[4]);
     return 0;
