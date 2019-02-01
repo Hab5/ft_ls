@@ -76,14 +76,14 @@ void print_minmajor(t_node *cursor, int size)
 
 void print_link(t_node *head)
 {
-	char	buf[256];
+	char	buf[1024];
 	int		len;
 
 	ft_putstr(head->name);
 	ft_putstr(" -> ");
 	len = readlink(head->path, buf, sizeof(buf));
 	buf[len] = '\0';
-	ft_putendl(buf);
+	ft_putstr(buf);
 }
 
 void print_long(t_node *cursor, char *filename)
@@ -101,7 +101,8 @@ void print_long(t_node *cursor, char *filename)
     print_date(ctime(&cursor->st.st_mtime));
     if(S_ISLNK(cursor->st.st_mode))
         print_link(cursor);
-    ft_putstr(cursor->name);
+    else
+        ft_putstr(cursor->name);
     ft_putstr("\n");
 }
 
@@ -115,9 +116,8 @@ void print_all_long(t_node *head, char path[])
         lstcursor->path = malloc(strlen(path) + strlen(lstcursor->name) + 1);
         ft_strcpy(lstcursor->path, path);
         ft_strcat(lstcursor->path, lstcursor->name);
-        //printf("%s\n", lstcursor->path);
 		print_long(lstcursor, lstcursor->path);
-		lstcursor = lstcursor->next;
+        lstcursor = lstcursor->next;
 	}
 }
 

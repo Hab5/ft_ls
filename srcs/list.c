@@ -7,7 +7,6 @@ void printlist(t_node* head)
     cursor = head;
     while(cursor != NULL)
     {
-       if(cursor->name)
         ft_putstr(cursor->name);
         ft_putstr("\n");
         cursor = cursor->next;
@@ -23,6 +22,40 @@ void push(t_node** head_ref, char *name)
     new_node->next = (*head_ref);  
     (*head_ref) = new_node;   
 }
+
+void pushBack(t_node** head, char *name)
+{
+    while (*head)
+        head = &(*head)->next;
+
+    *head = malloc(sizeof(**head));
+    (*head)->name = ft_strdup(name);
+    (*head)->next = NULL;
+}
+
+void deleteHead(t_node **head)
+{
+    t_node *temp = *head;
+    temp = temp->next;
+    free(head);
+    *head = temp;
+}
+
+void listreverse(t_node** head_ref) 
+{ 
+
+   t_node* prev   = NULL; 
+    t_node* current = *head_ref; 
+    t_node* next; 
+    while (current != NULL) 
+    { 
+        next  = current->next;   
+    current->next = prev;    
+        prev = current; 
+        current = next; 
+    } 
+    *head_ref = prev;               
+} 
 
 
 void deleteNode(t_node *head, t_node *cursor) 

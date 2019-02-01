@@ -46,7 +46,9 @@ t_node *output_filestack(t_node *head, char options[]);
 
 void printlist(t_node* head);
 void push(t_node** head_ref, char *name);
-void reverse(t_node *head);
+void pushBack(t_node** head, char *name);
+void listreverse(t_node** head_ref); 
+void deleteHead(t_node **head);
 void deleteNode(t_node *head, t_node *cursor);
 void deleteList(t_node** head_ref);
 
