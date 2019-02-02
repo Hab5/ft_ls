@@ -7,11 +7,23 @@ void flags_error(char *current, int i)
 	ft_putstr("\nusage: ls [-Ralrt] [file ...]\n");
 }
 
+void ft_pustrless(const char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i+1] != '\0')
+		ft_putchar(str[i++]);
+}
+
 char *get_path(char path[], char *filename)
 {
 	ft_strcat(path, filename);
 	ft_strcat(path, "/");
-	printf("\n%s\n", path);
+	ft_putstr("\n");
+	ft_pustrless(path);
+	ft_putstr(":\n");
+	//printf("\n%s\n", path);
 	return(path);
 }
 

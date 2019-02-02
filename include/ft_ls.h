@@ -66,7 +66,9 @@ void print_all_long(t_node *head, char path[]);
 void padding(t_node *head, char path[], int len[]);
 void padcheck(t_node *cursor, t_pwd *pwd, t_grp *grp, int len[]);
 void pudding(char *str, int len);
+
 char *get_path(char path[], char *filename);
+void ft_pustrless(const char *str);
 t_node *grab_filepath(char path[], t_node *stack, t_node *head);
 void flags_error(char *current, int i);
 
