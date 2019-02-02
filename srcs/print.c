@@ -102,7 +102,7 @@ void padcheck(t_node *cursor, t_pwd *pwd, t_grp *grp, int len[])
         len[3] = strlen(ft_itoa(cursor->st.st_size));
     if(strlen(ft_itoa(major(cursor->st.st_rdev))) > len[4])
         len[4] = strlen(ft_itoa(major(cursor->st.st_rdev)));
-    if(strlen(ft_itoa(major(cursor->st.st_rdev))) > len[5])
+    if(strlen(ft_itoa(minor(cursor->st.st_rdev))) > len[5])
         len[5] = strlen(ft_itoa(minor(cursor->st.st_rdev)));
             
 }
