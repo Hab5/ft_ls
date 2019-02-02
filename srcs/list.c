@@ -33,12 +33,14 @@ void pushBack(t_node** head, char *name)
     (*head)->next = NULL;
 }
 
-void deleteHead(t_node **head)
+void pop(t_node **head)
 {
-    t_node *temp = *head;
-    temp = temp->next;
-    free(head);
-    *head = temp;
+    if (*head != NULL) 
+    {
+        t_node *node = *head;
+        *head = (*head)->next;
+        free(node);
+    }
 }
 
 void listreverse(t_node** head_ref) 

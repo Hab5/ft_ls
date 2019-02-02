@@ -1,5 +1,5 @@
 #include "../include/ft_ls.h"
-
+#include <errno.h>
 t_node *clean_stack(t_node *stack, t_node **head)
 {
 	t_node *cursor;
@@ -15,25 +15,37 @@ t_node *clean_stack(t_node *stack, t_node **head)
 	}
 	if (!(S_ISDIR(stack->st.st_mode) == 1))
 		stack = stack->next;
-	printf("\nCLEAN STACK :\n");
 	MergeSort(&stack);
 	MergeSort(head);
-	printlist(stack);
 	return (stack);
 }
 
-t_node *output_filestack(t_node *head, char options[])
+void test(int len[])
+{
+	len[0] = 0;
+	len[1] = 1;
+	len[2] = 2;
+	len[3] = 3;
+}
+
+t_node *output_filestack(t_node *head, char options[], char path[])
 {
     t_node* cursor;
-	
+	static int i;
+	i=0;
+
+	int len[6] = {0};
 	cursor = head;
 	if (options[0] == 0)
 		printlist(head);
 	else if (options[0] != 0)
 	{
 		while(cursor != NULL)
-    	{
-			print_long(cursor, cursor->name);
+    	{	
+			path = "\0";
+			stat(cursor->name, &cursor->st);
+			padding(head, path, len);
+			print_long(cursor, cursor->name, len);
 			cursor = cursor->next;
 		}
 	}

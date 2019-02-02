@@ -1,28 +1,5 @@
 #include "../include/ft_ls.h"
 
-char *get_path(char path[], char *filename)
-{
-	ft_strcat(path, filename);
-	ft_strcat(path, "/");
-	printf("\n%s\n", path);
-	return(path);
-}
-
-int pop( t_node **head )
-{
-    if ( *head != NULL ) 
-    {
-        t_node *node = *head;
-        *head = ( *head )->next;
-        free( node );
-        return 1;
-    }
-    else
-    {
-        return 2;
-    }
-}
-
 t_node *fill_list(t_node *stack, t_node *head, char options[])
 {
 	t_dir *dirent;
@@ -45,22 +22,6 @@ t_node *fill_list(t_node *stack, t_node *head, char options[])
 		}
 	}
 	closedir(dir);
-	return (head);
-}
-
-t_node *grab_filepath(char path[], t_node *stack, t_node *head)
-{
-	t_node *lstcursor;
-
-	lstcursor = head;
-    while(lstcursor != NULL)
-	{
-		lstcursor->path = malloc(strlen(path) + strlen(lstcursor->name) + 1);
-        ft_strcpy(lstcursor->path, path);
-        ft_strcat(lstcursor->path, lstcursor->name);
-		stat(lstcursor->path, &lstcursor->st);
-		lstcursor = lstcursor->next;
-	}
 	return (head);
 }
 
@@ -88,6 +49,7 @@ t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
 {
 	t_node *cursor;
 	cursor = stack;
+	int len[4] = {[0] = 4};
 	while(cursor != NULL)
     {
 		ft_bzero(path, 1024);
@@ -112,15 +74,15 @@ t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
 int main(int argc, char **argv)
 {
     char options[5];
+	char path[1024];
     t_node *head;
 	t_node *stack;
-	char path[1024];
     
 	head = NULL;
 	stack = NULL;
 	stack = sort_param(argc, argv, stack, options);// at this point, stack contains files
 	stack = clean_stack(stack, &head); // not anymore
-	head = output_filestack(head, options);
+	head = output_filestack(head, options, path);
 	stack = print_stack(stack, head, options, path);
 	
 	//pop(&stack);
