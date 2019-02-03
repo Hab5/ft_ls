@@ -6,7 +6,7 @@ t_node *fill_list(t_node *stack, t_node *head, char options[])
     DIR *dir;
     
 	if(!(dir = opendir(stack->name)))
-		ft_putstr("Operation not permitted\n");
+		return 0;//ft_putstr("Operation not permitted\n");
 	deleteList(&head);
 	if(options[2])
     {
@@ -49,14 +49,15 @@ t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
 {
 	t_node *cursor;
 	cursor = stack;
-	int len[4] = {[0] = 4};
+	int len[7];
 	while(cursor != NULL)
     {
 		ft_bzero(path, 1024);
 		head = fill_list(cursor, head, options);
 		MergeSort(&head);
+		if (options[3])
+			listreverse(&head);
 		get_path(path, cursor->name);
-		
 		if (!(options[0]))
 		{
 			head = grab_filepath(path, cursor, head);
@@ -80,18 +81,13 @@ int main(int argc, char **argv)
     
 	head = NULL;
 	stack = NULL;
-	stack = sort_param(argc, argv, stack, options);// at this point, stack contains files
-	stack = clean_stack(stack, &head); // not anymore
+	head = get_param(argc, argv, &stack, options);
 	head = output_filestack(head, options, path);
 	stack = print_stack(stack, head, options, path);
 	
-	//pop(&stack);
-	// printf("\nFULL STACK : \n");
-	// printlist(stack);
-	
-	
-	
-	
-	printf("\noptions : %c, %c, %c, %c, %c\n", options[0], options[1], options[2], options[3], options[4]);
+	//free(path);
+	deleteList(&head);
+	deleteList(&stack);
+	//printf("options : %c, %c, %c, %c, %c\n", options[0], options[1], options[2], options[3], options[4]);
     return 0;
 }

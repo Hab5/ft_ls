@@ -104,6 +104,7 @@ void padcheck(t_node *cursor, t_pwd *pwd, t_grp *grp, int len[])
         len[4] = strlen(ft_itoa(major(cursor->st.st_rdev)));
     if(strlen(ft_itoa(minor(cursor->st.st_rdev))) > len[5])
         len[5] = strlen(ft_itoa(minor(cursor->st.st_rdev)));
+    len[6] += cursor->st.st_blocks;  
             
 }
 void padding(t_node *head, char path[], int len[])
@@ -164,27 +165,26 @@ void print_long(t_node *cursor, char *filename, int len[])
 void print_all_long(t_node *head, char path[])
 {
 	t_node *lstcursor;
-	lstcursor = head;
-    int len[6] = {0};
+	int i;
+
+    i = 0;
+    lstcursor = head;
+    int len[7] = {0};
     while(lstcursor != NULL)
 	{
         lstcursor->path = malloc(strlen(path) + strlen(lstcursor->name) + 1);
         ft_strcpy(lstcursor->path, path);
         ft_strcat(lstcursor->path, lstcursor->name);
         padding(head, path, len);
-		print_long(lstcursor, lstcursor->path, len);
+		if (i++ == 0)
+        {
+            ft_putstr("total ");
+            ft_putnbr(len[6]);
+            ft_putstr("\n");
+        }
+        print_long(lstcursor, lstcursor->path, len);
         lstcursor = lstcursor->next;
 	}
-    // printf("blocks: %d || uid : %d || gid : %d || size : %d\n", len[0], len[1], len[2], len[3]);
+    i = 0;
+    ft_putstr("\n");
 }
-
-/*int main()
-{
-    t_node *list = NULL;
-    push(&list, "a.out");
-    t_node* cursor;
-    
-    cursor = list;
-    print_long(cursor);
-    return 0;
-}*/

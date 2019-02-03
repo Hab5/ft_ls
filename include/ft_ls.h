@@ -36,7 +36,7 @@ typedef struct  s_node
 
 void check_options(char *options, char *current);
 int get_options(char *options, int argc, char **argv);
-void get_param(int argc, char **argv, t_node **stack, int current);
+t_node *get_param(int argc, char **argv, t_node **stack, char options[]);
 int file_exist (char *filename);
 t_node *sort_param(int argc, char **argv, t_node *stack, char options[]);
 
@@ -48,7 +48,8 @@ void push(t_node **head_ref, char *name);
 void pushBack(t_node **head, char *name);
 void listreverse(t_node **head_ref); 
 void pop(t_node **head);
-void deleteNode(t_node *head, t_node *cursor);
+t_node *deleteLast(t_node *head);
+t_node *deleteNode(t_node *head, t_node *cursor);
 void deleteList(t_node **head_ref);
 
 int MergeSort(t_node** headRef);

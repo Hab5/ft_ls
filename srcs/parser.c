@@ -46,40 +46,57 @@ int file_exist(char *filename)
     return (stat(filename, &buf) == 0);
 }
 
-void get_param(int argc, char **argv, t_node **stack, int current)
+t_node *get_param(int argc, char **argv, t_node **stack, char options[])
 {
+    t_node *head;
+    int current;
+    t_stat st;
 
-    if (argc  <= current)
-        push(stack, ".");
+    current = get_options(options, argc, argv);
+    head = NULL;
+    if (argc <= current)
+            push(stack, ".");
     while (argc > current)
-    {
-        push(stack, argv[argc - 1]);
+    {   
+        stat(argv[argc - 1], &st);
+
+        if (file_exist(argv[argc - 1]) == 1 && (S_ISDIR(st.st_mode)))
+            push(stack, argv[argc - 1]);
+
+        else if(file_exist(argv[argc - 1]) == 1 && !(S_ISDIR(st.st_mode)))
+            push(&head, argv[argc - 1]);
+        else
+        {
+            ft_putstr("\x1B[31mls: ");
+			ft_putstr(argv[argc-1]);
+			ft_putstr(": No such file or directory\x1B[0m\n");
+        }
         argc--;
     }
+    return (head);
 }
 
-t_node *sort_param(int argc, char **argv, t_node *stack, char options[])
+t_node *output_filestack(t_node *head, char options[], char path[])
 {
-	int current;
-	t_node *cursor;
-	
-	current = get_options(options, argc, argv);
-	get_param(argc, argv, &stack, current);
-	cursor = stack;
-	while (cursor != NULL)
+    t_node* cursor;
+	static int i;
+	i=0;
+
+	int len[7] = {0};
+	cursor = head;
+	if (options[0] == 0)
+		printlist(head);
+	else if (options[0] != 0)
 	{
-		if(file_exist(cursor->name) != 1)
-		{
-			deleteNode(stack, cursor);
-			ft_putstr("ls: ");
-			ft_putstr(cursor->name);
-			ft_putstr(": No such file or directory\n");
+		while(cursor != NULL)
+    	{	
+			path = "\0";
+			stat(cursor->name, &cursor->st);
+			padding(head, path, len);
+			print_long(cursor, cursor->name, len);
+			cursor = cursor->next;
 		}
-		cursor = cursor->next;
 	}
-	if (file_exist(stack->name) != 1)
-		stack = stack->next;
-    if (!(stack))
-        exit(0);
-	return (stack);
+	deleteList(&head);
+	return (head);
 }

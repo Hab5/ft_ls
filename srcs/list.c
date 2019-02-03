@@ -14,7 +14,7 @@ void printlist(t_node* head)
     ft_putstr("\n");
 }
 
-void push(t_node** head_ref, char *name) 
+void push(t_node **head_ref, char *name) 
 { 
     t_node* new_node; 
     new_node = (t_node*)malloc(sizeof(t_node)); 
@@ -23,7 +23,7 @@ void push(t_node** head_ref, char *name)
     (*head_ref) = new_node;   
 }
 
-void pushBack(t_node** head, char *name)
+void pushBack(t_node **head, char *name)
 {
     while (*head)
         head = &(*head)->next;
@@ -33,57 +33,21 @@ void pushBack(t_node** head, char *name)
     (*head)->next = NULL;
 }
 
-void pop(t_node **head)
-{
-    if (*head != NULL) 
-    {
-        t_node *node = *head;
-        *head = (*head)->next;
-        free(node);
-    }
-}
-
-void listreverse(t_node** head_ref) 
+void listreverse(t_node **head_ref) 
 { 
 
-   t_node* prev   = NULL; 
+    t_node* prev = NULL; 
     t_node* current = *head_ref; 
     t_node* next; 
     while (current != NULL) 
     { 
         next  = current->next;   
-    current->next = prev;    
+        current->next = prev;    
         prev = current; 
         current = next; 
     } 
     *head_ref = prev;               
 } 
-
-
-void deleteNode(t_node *head, t_node *cursor) 
-{
-   t_node *temp;
-   t_node *ptr;
-   
-   temp = cursor;
-   if (temp == NULL)
-      printf("nothing to delete\n");
-   else {
-      if (temp == head) 
-      {
-         head = head->next;
-         //free(temp);
-      }
-      else 
-      {
-         ptr = head;
-         while (ptr->next != temp)
-            ptr = ptr->next;
-         ptr->next = temp->next;
-         //free(temp);
-      }
-   }
-}
  
 void deleteList(t_node **head_ref) 
 { 
