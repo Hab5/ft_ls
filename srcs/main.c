@@ -1,6 +1,32 @@
 #include "../include/ft_ls.h"
 
-t_node *stacking(t_node *stack, t_node **head)
+t_node *output_filestack(t_node *head, char options[], char path[])
+{
+    t_node* cursor;
+
+	int len[7] = {0};
+    bzero(len, 7);
+	cursor = head;
+	if (options[0] == 0)
+	{
+		printlist(head, path);
+		free_filestack(&head);
+	}
+	else if (options[0] != 0)
+	{
+		while(cursor != NULL)
+    	{	
+			path = "\0";
+			padding(head, path, len);
+			print_long(cursor, cursor->name, len);
+			cursor = cursor->next;
+		}
+	}
+	deleteStack(&head);
+	return (head);
+}
+
+t_node *stacking(t_node *stack, t_node **head, char path[])
 {
 	t_node *cursor;
 
@@ -55,16 +81,16 @@ t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
 		ft_bzero(path, 1024);
 		fill_list(cursor, &head, options);
 		get_path(path, cursor->name);
-		get_filepath(&head, path);
+		get_filepath(&head, path, options);
 		MergeSort(&head, path, options);
 		if (options[3])
 			listreverse(&head);
 		if (!(options[0]))
-			printlist(head);
+			printlist(head, path);
 		if(options[0])
 			print_all_long(head, path);
 		if(options[1])
-			stack = stacking(stack, &head);
+			stack = stacking(stack, &head, path);
 		deleteList(&head);
 	 	cursor = (options[1]) ? stack : cursor->next;
 	}

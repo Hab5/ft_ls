@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include <string.h>
 
-void get_filepath(t_node **head, char path[])
+void get_filepath(t_node **head, char path[], char options[])
 {
 	t_node *lstcursor;
 	char *temp;
@@ -14,7 +14,8 @@ void get_filepath(t_node **head, char path[])
 		temp = malloc(strlen(path) + strlen(lstcursor->name) + 1);
         ft_strcpy(temp, path);
         ft_strcat(temp, lstcursor->name);
-		stat(temp, &lstcursor->st);
+		lstcursor->path = temp;
+		stat(lstcursor->path, &lstcursor->st);
 		free(temp);
 		lstcursor = lstcursor->next;
 	}
@@ -25,16 +26,8 @@ int MergeSort(t_node** headRef, char path[], char options[])
 	t_node* head; 
 	t_node* a; 
 	t_node* b;
-	// static int i;
-
-	// i = 0;
-    head = *headRef;
-	// if(i == 0)
-	// {
-	// 	printf("%d\n", i);
-	// 	get_time(&head, path);
-	// 	i++;
-	// }
+    
+	head = *headRef;
     if ((head == NULL) || (head->next == NULL)) 
     	return (0); 
 	
@@ -81,7 +74,7 @@ t_node* SortedMergeTime(t_node* a, t_node* b)
     	return(b); 
 	else if (b == NULL) 
     	return(a); 
-	if (a->st.st_mtime > b->st.st_mtime)// strcmp(a->name, b->name) < 0)
+	if (a->st.st_mtime > b->st.st_mtime)
 	{ 
     	result = a; 
     	result->next = SortedMergeTime(a->next, b); 

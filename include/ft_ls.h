@@ -21,55 +21,56 @@ typedef struct timespec	t_time;
 typedef struct passwd	t_pwd;
 typedef struct group	t_grp;
 
-typedef struct  s_node
+typedef struct          s_node
 {
-    char			*name;
-	char			*path;
-	t_pwd			*pwd;
-    t_grp			*grp;
-	t_stat			st;
-    struct          s_node *next;
+    char                *name;
+	char			    *path;
+	t_pwd			    *pwd;
+    t_grp			    *grp;
+	t_stat			    st;
+    struct              s_node *next;
 
-}                t_node;
+}                       t_node;
 
-void check_options(char *options, char *current);
-int get_options(char *options, int argc, char **argv);
-t_node *get_param(int argc, char **argv, t_node **stack, char options[]);
-int file_exist (char *filename);
-t_node *sort_param(int argc, char **argv, t_node *stack, char options[]);
+void                    check_options(char *options, char *current);
+int                     get_options(char *options, int argc, char **argv);
+t_node                  *get_param(int argc, char **argv, t_node **stack, char options[]);
+int                     file_exist (char *filename);
+t_node                  *sort_param(int argc, char **argv, t_node *stack, char options[]);
 
-t_node *clean_stack(t_node *stack, t_node **head);
-t_node *output_filestack(t_node *head, char options[], char path[]);
+t_node                  *clean_stack(t_node *stack, t_node **head);
+t_node                  *output_filestack(t_node *head, char options[], char path[]);
 
-void printlist(t_node *head);
-void push(t_node **head_ref, char *name);
-void pushBack(t_node **head, char *name);
-void listreverse(t_node **head_ref); 
-void pop(t_node **head);
-void deleteList(t_node **head_ref);
-void deleteStack(t_node **head_ref);
+void                    printlist(t_node *head, char path[]);
+void                    push(t_node **head_ref, char *name);
+void                    pushBack(t_node **head, char *name);
+void                    listreverse(t_node **head_ref); 
+void                    pop(t_node **head);
+void                    deleteList(t_node **head_ref);
+void                    deleteStack(t_node **head_ref);
 
-void get_filepath(t_node **head, char path[]);
-int MergeSort(t_node** headRef, char path[] ,char options[]);
-t_node* SortedMerge(t_node* a, t_node* b);
-t_node* SortedMergeTime(t_node* a, t_node* b);
-void FrontBackSplit(t_node* source, t_node** frontRef, t_node** backRef);
+int                     MergeSort(t_node** headRef, char path[] ,char options[]);
+t_node*                 SortedMerge(t_node* a, t_node* b);
+t_node*                 SortedMergeTime(t_node* a, t_node* b);
+void                    FrontBackSplit(t_node* source, t_node** frontRef, t_node** backRef);
 
-void print_access(t_stat st);
-void print_id(t_pwd *pwd, t_grp *grp, t_stat st, int len[]);
-void print_date(char *ctime);
-void print_minmajor(t_node *cursor, int size, int len[]);
-void print_link(t_node *head);
-void print_long(t_node *cursor, char *filename, int len[]);
-void print_all_long(t_node *head, char path[]);
+void                    print_access(t_stat st);
+void                    print_id(t_pwd *pwd, t_grp *grp, t_stat st, int len[]);
+void                    print_date(char *ctime);
+void                    print_minmajor(t_node *cursor, int size, int len[]);
+void                    print_link(t_node *head);
+void                    print_long(t_node *cursor, char *filename, int len[]);
+void                    print_all_long(t_node *head, char path[]);
 
-void padding(t_node *head, char path[], int len[]);
-void padcheck(t_node *cursor, t_pwd *pwd, t_grp *grp, int len[]);
-void pudding(char *str, int len);
+void                    padding(t_node *head, char path[], int len[]);
+void                    padcheck(t_node *cursor, t_pwd *pwd, t_grp *grp, int len[]);
+void                    pudding(char *str, int len);
 
-char *get_path(char path[], char *filename);
-void ft_pustrless(const char *str);
-t_node *grab_filepath(char path[], t_node *stack, t_node *head);
-void flags_error(char *current, int i);
+void                    free_filestack(t_node **head);
+void                    get_filepath(t_node **head, char path[], char options[]);
+char                    *get_path(char path[], char *filename);
+void                    ft_pustrless(const char *str);
+t_node                  *grab_filepath(char path[], t_node *stack, t_node *head);
+void                    flags_error(char *current, int i);
 
 #endif

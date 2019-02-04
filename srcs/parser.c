@@ -76,28 +76,14 @@ t_node *get_param(int argc, char **argv, t_node **stack, char options[])
     return (head);
 }
 
-t_node *output_filestack(t_node *head, char options[], char path[])
+void free_filestack(t_node **head)
 {
-    t_node* cursor;
-	int i;
-	i=0;
+    t_node *cursor;
 
-	int len[7] = {0};
-    bzero(len, 7);
-	cursor = head;
-	if (options[0] == 0)
-		printlist(head);
-	else if (options[0] != 0)
-	{
-		while(cursor != NULL)
-    	{	
-			path = "\0";
-			//stat(cursor->name, &cursor->st);
-			padding(head, path, len);
-			print_long(cursor, cursor->name, len);
-			cursor = cursor->next;
-		}
-	}
-	deleteStack(&head);
-	return (head);
+    cursor = *head;
+    while(cursor != NULL)
+    {
+        free(cursor->path);
+        cursor = cursor->next;
+    }
 }

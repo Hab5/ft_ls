@@ -1,12 +1,15 @@
 #include "../include/ft_ls.h"
 
-void printlist(t_node* head)
+void printlist(t_node* head, char path[])
 {
     t_node* cursor;
     
     cursor = head;
     while(cursor != NULL)
     {
+        cursor->path = malloc(strlen(path) + strlen(cursor->name) + 1);
+        ft_strcpy(cursor->path, path);
+        ft_strcat(cursor->path, cursor->name);
         ft_putstr(cursor->name);
         ft_putstr("\n");
         cursor = cursor->next;
