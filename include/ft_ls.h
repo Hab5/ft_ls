@@ -25,8 +25,6 @@ typedef struct  s_node
 {
     char			*name;
 	char			*path;
-	time_t			date;
-	dev_t			st_rdev;
 	t_pwd			*pwd;
     t_grp			*grp;
 	t_stat			st;
@@ -48,9 +46,8 @@ void push(t_node **head_ref, char *name);
 void pushBack(t_node **head, char *name);
 void listreverse(t_node **head_ref); 
 void pop(t_node **head);
-t_node *deleteLast(t_node *head);
-t_node *deleteNode(t_node *head, t_node *cursor);
 void deleteList(t_node **head_ref);
+void deleteStack(t_node **head_ref);
 
 int MergeSort(t_node** headRef);
 t_node* SortedMerge(t_node* a, t_node* b);

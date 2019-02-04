@@ -1,36 +1,35 @@
 #include "../include/ft_ls.h"
 
-t_node *fill_list(t_node *stack, t_node *head, char options[])
+void fill_list(t_node *stack, t_node **head, char options[])
 {
 	t_dir *dirent;
     DIR *dir;
     
+	deleteList(head);
 	if(!(dir = opendir(stack->name)))
-		return 0;//ft_putstr("Operation not permitted\n");
-	deleteList(&head);
+		return;
 	if(options[2])
     {
 		while ((dirent = readdir(dir)) != NULL)
-			push(&head, ft_strdup(dirent->d_name));
+			push(head, dirent->d_name);
 	}
 	if (!(options[2]))
 	{
 		while ((dirent = readdir(dir)) != NULL)
     	{
 			if(dirent->d_name[0] != '.')
-				push(&head, ft_strdup(dirent->d_name));
+				push(head, dirent->d_name);
 		}
 	}
 	closedir(dir);
-	return (head);
 }
 
-t_node *stacking(t_node *stack, t_node *head)
+t_node *stacking(t_node *stack, t_node **head)
 {
 	t_node *cursor;
 
-	listreverse(&head);
-	cursor = head;
+	listreverse(head);
+	cursor = *head;
 	pop(&stack);
 	while(cursor != NULL)
     {
@@ -38,22 +37,23 @@ t_node *stacking(t_node *stack, t_node *head)
 			strcmp(cursor->name, "..") != 0)
 		{
 		if(S_ISDIR(cursor->st.st_mode))
-			push(&stack, ft_strdup(cursor->path));
+			push(&stack, cursor->path);
 		}
 		cursor = cursor->next;
 	}
+	deleteList(head);
 	return (stack);
 }
 
 t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
 {
 	t_node *cursor;
+	
 	cursor = stack;
-	int len[7];
 	while(cursor != NULL)
     {
 		ft_bzero(path, 1024);
-		head = fill_list(cursor, head, options);
+		fill_list(cursor, &head, options);
 		MergeSort(&head);
 		if (options[3])
 			listreverse(&head);
@@ -66,7 +66,8 @@ t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
 		if(options[0])
 			print_all_long(head, path);
 		if(options[1] != 0)
-			stack = stacking(stack, head);
+			stack = stacking(stack, &head);
+		deleteList(&head);
 	 	cursor = (options[1]) ? stack : cursor->next;
 	}
 	return(stack);
@@ -84,10 +85,6 @@ int main(int argc, char **argv)
 	head = get_param(argc, argv, &stack, options);
 	head = output_filestack(head, options, path);
 	stack = print_stack(stack, head, options, path);
-	
-	//free(path);
-	deleteList(&head);
-	deleteList(&stack);
-	//printf("options : %c, %c, %c, %c, %c\n", options[0], options[1], options[2], options[3], options[4]);
+	deleteStack(&stack);
     return 0;
 }

@@ -16,11 +16,14 @@ void printlist(t_node* head)
 
 void push(t_node **head_ref, char *name) 
 { 
-    t_node* new_node; 
+    t_node* new_node;
+    char *temp;
+    
     new_node = (t_node*)malloc(sizeof(t_node)); 
-    new_node->name = ft_strdup(name); 
+    temp = strdup(name);
+    new_node->name = temp; 
     new_node->next = (*head_ref);  
-    (*head_ref) = new_node;   
+    (*head_ref) = new_node;
 }
 
 void pushBack(t_node **head, char *name)
@@ -56,9 +59,26 @@ void deleteList(t_node **head_ref)
   
    while (cursor != NULL)  
    { 
-       next = cursor->next; 
-       free(cursor); 
-       cursor = next; 
+        next = cursor->next;
+        free(cursor->name);
+        free(cursor->path);
+        free(cursor); 
+        cursor = next; 
    } 
    *head_ref = NULL; 
-} 
+}
+
+void deleteStack(t_node **head_ref) 
+{ 
+   t_node* cursor = *head_ref; 
+   t_node* next; 
+  
+   while (cursor != NULL)  
+   { 
+        next = cursor->next;
+        free(cursor->name);
+        free(cursor);
+        cursor = next; 
+   } 
+   *head_ref = NULL; 
+}

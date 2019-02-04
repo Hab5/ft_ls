@@ -79,10 +79,11 @@ t_node *get_param(int argc, char **argv, t_node **stack, char options[])
 t_node *output_filestack(t_node *head, char options[], char path[])
 {
     t_node* cursor;
-	static int i;
+	int i;
 	i=0;
 
 	int len[7] = {0};
+    bzero(len, 7);
 	cursor = head;
 	if (options[0] == 0)
 		printlist(head);
@@ -97,6 +98,6 @@ t_node *output_filestack(t_node *head, char options[], char path[])
 			cursor = cursor->next;
 		}
 	}
-	deleteList(&head);
+	deleteStack(&head);
 	return (head);
 }
