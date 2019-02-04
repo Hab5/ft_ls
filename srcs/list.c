@@ -26,16 +26,6 @@ void push(t_node **head_ref, char *name)
     (*head_ref) = new_node;
 }
 
-void pushBack(t_node **head, char *name)
-{
-    while (*head)
-        head = &(*head)->next;
-
-    *head = malloc(sizeof(**head));
-    (*head)->name = ft_strdup(name);
-    (*head)->next = NULL;
-}
-
 void listreverse(t_node **head_ref) 
 { 
 

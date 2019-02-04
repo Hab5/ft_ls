@@ -1,5 +1,26 @@
 #include "../include/ft_ls.h"
 
+t_node *stacking(t_node *stack, t_node **head)
+{
+	t_node *cursor;
+
+	listreverse(head);
+	cursor = *head;
+	pop(&stack);
+	while(cursor != NULL)
+    {
+		if(strcmp(cursor->name, ".") != 0 &&
+			strcmp(cursor->name, "..") != 0)
+		{
+		if(S_ISDIR(cursor->st.st_mode))
+			push(&stack, cursor->path);
+		}
+		cursor = cursor->next;
+	}
+	deleteList(head);
+	return (stack);
+}
+
 void fill_list(t_node *stack, t_node **head, char options[])
 {
 	t_dir *dirent;
@@ -22,27 +43,6 @@ void fill_list(t_node *stack, t_node **head, char options[])
 		}
 	}
 	closedir(dir);
-}
-
-t_node *stacking(t_node *stack, t_node **head)
-{
-	t_node *cursor;
-
-	listreverse(head);
-	cursor = *head;
-	pop(&stack);
-	while(cursor != NULL)
-    {
-		if(strcmp(cursor->name, ".") != 0 &&
-			strcmp(cursor->name, "..") != 0)
-		{
-		if(S_ISDIR(cursor->st.st_mode))
-			push(&stack, cursor->path);
-		}
-		cursor = cursor->next;
-	}
-	deleteList(head);
-	return (stack);
 }
 
 t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
