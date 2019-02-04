@@ -49,8 +49,10 @@ void pop(t_node **head);
 void deleteList(t_node **head_ref);
 void deleteStack(t_node **head_ref);
 
-int MergeSort(t_node** headRef);
+void get_filepath(t_node **head, char path[]);
+int MergeSort(t_node** headRef, char path[] ,char options[]);
 t_node* SortedMerge(t_node* a, t_node* b);
+t_node* SortedMergeTime(t_node* a, t_node* b);
 void FrontBackSplit(t_node* source, t_node** frontRef, t_node** backRef);
 
 void print_access(t_stat st);

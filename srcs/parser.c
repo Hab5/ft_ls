@@ -92,7 +92,7 @@ t_node *output_filestack(t_node *head, char options[], char path[])
 		while(cursor != NULL)
     	{	
 			path = "\0";
-			stat(cursor->name, &cursor->st);
+			//stat(cursor->name, &cursor->st);
 			padding(head, path, len);
 			print_long(cursor, cursor->name, len);
 			cursor = cursor->next;

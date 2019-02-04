@@ -54,18 +54,16 @@ t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
     {
 		ft_bzero(path, 1024);
 		fill_list(cursor, &head, options);
-		MergeSort(&head);
+		get_path(path, cursor->name);
+		get_filepath(&head, path);
+		MergeSort(&head, path, options);
 		if (options[3])
 			listreverse(&head);
-		get_path(path, cursor->name);
 		if (!(options[0]))
-		{
-			head = grab_filepath(path, cursor, head);
 			printlist(head);
-		}
 		if(options[0])
 			print_all_long(head, path);
-		if(options[1] != 0)
+		if(options[1])
 			stack = stacking(stack, &head);
 		deleteList(&head);
 	 	cursor = (options[1]) ? stack : cursor->next;

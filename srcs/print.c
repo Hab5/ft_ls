@@ -43,15 +43,15 @@ void padding(t_node *head, char path[], int len[])
     cursor = head;
     while(cursor != NULL)
     {
-        temp = malloc(strlen(path) + strlen(cursor->name) + 1);
-        ft_strcpy(temp, path);
-        ft_strcat(temp, cursor->name);
-        lstat(temp, &cursor->st);
+        // temp = malloc(strlen(path) + strlen(cursor->name) + 1);
+        // ft_strcpy(temp, path);
+        // ft_strcat(temp, cursor->name);
+        lstat(cursor->path, &cursor->st);
         pwd = getpwuid(cursor->st.st_uid);
         grp = getgrgid(cursor->st.st_gid);
         padcheck(cursor, pwd, grp, len);
         len[6] += cursor->st.st_blocks;
-        free(temp);
+        //free(temp);
         cursor = cursor->next;
     }
 }
