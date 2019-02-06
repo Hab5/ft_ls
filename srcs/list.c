@@ -1,8 +1,8 @@
 #include "../include/ft_ls.h"
 
-void printlist(t_node* head, char path[])
+void            printlist(t_node* head, char path[])
 {
-    t_node* cursor;
+    t_node*     cursor;
     
     cursor = head;
     while(cursor != NULL)
@@ -17,61 +17,66 @@ void printlist(t_node* head, char path[])
     ft_putstr("\n");
 }
 
-void push(t_node **head_ref, char *name) 
+void            push(t_node **head_ref, char *name) 
 { 
-    t_node* new_node;
-    char *temp;
+    t_node      *new_node;
+    char        *temp;
     
     new_node = (t_node*)malloc(sizeof(t_node)); 
-    temp = strdup(name);
+    temp = ft_strdup(name);
     new_node->name = temp; 
     new_node->next = (*head_ref);  
     (*head_ref) = new_node;
 }
 
-void listreverse(t_node **head_ref) 
+void            listreverse(t_node **head_ref) 
 { 
 
-    t_node* prev = NULL; 
-    t_node* current = *head_ref; 
-    t_node* next; 
-    while (current != NULL) 
+    t_node      *prev; 
+    t_node      *cursor;
+    t_node      *next;
+
+    prev = NULL;
+    cursor = *head_ref;  
+    while (cursor != NULL) 
     { 
-        next  = current->next;   
-        current->next = prev;    
-        prev = current; 
-        current = next; 
+        next  = cursor->next;   
+        cursor->next = prev;    
+        prev = cursor; 
+        cursor = next; 
     } 
     *head_ref = prev;               
 } 
  
-void deleteList(t_node **head_ref) 
+void            deleteList(t_node **head_ref) 
 { 
-   t_node* cursor = *head_ref; 
-   t_node* next; 
-  
-   while (cursor != NULL)  
-   { 
+    t_node       *cursor; 
+    t_node       *next; 
+
+    cursor = *head_ref;
+    while (cursor != NULL)  
+    { 
         next = cursor->next;
         free(cursor->name);
         free(cursor->path);
         free(cursor); 
         cursor = next; 
-   } 
-   *head_ref = NULL; 
+    } 
+    *head_ref = NULL; 
 }
 
-void deleteStack(t_node **head_ref) 
+void            deleteStack(t_node **head_ref) 
 { 
-   t_node* cursor = *head_ref; 
-   t_node* next; 
+    t_node*     cursor; 
+    t_node*     next; 
   
-   while (cursor != NULL)  
-   { 
+    cursor = *head_ref; 
+    while (cursor != NULL)  
+    { 
         next = cursor->next;
         free(cursor->name);
         free(cursor);
         cursor = next; 
-   } 
-   *head_ref = NULL; 
+    } 
+    *head_ref = NULL; 
 }

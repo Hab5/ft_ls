@@ -1,24 +1,25 @@
 #include "../include/ft_ls.h"
 
-t_node *output_filestack(t_node *head, char options[], char path[])
+t_node			*output_filestack(t_node *head, char options[], char path[])
 {
-    t_node* cursor;
+    t_node		*cursor;
 
 	int len[7] = {0};
     bzero(len, 7);
-	cursor = head;
-	if (options[0] == 0)
+	if (!(options[0]))
 	{
 		printlist(head, path);
 		free_filestack(&head);
 	}
-	else if (options[0] != 0)
+	else if (options[0])
 	{
+		get_filepath(&head, path);
+		MergeSort(&head, path, options);
+		padding(head, len);
+		cursor = head;
 		while(cursor != NULL)
     	{	
-			path = "\0";
-			padding(head, path, len);
-			print_long(cursor, cursor->name, len);
+			print_long(cursor, len);
 			cursor = cursor->next;
 		}
 	}
@@ -26,9 +27,9 @@ t_node *output_filestack(t_node *head, char options[], char path[])
 	return (head);
 }
 
-t_node *stacking(t_node *stack, t_node **head, char path[])
+t_node			*stacking(t_node *stack, t_node **head)
 {
-	t_node *cursor;
+	t_node		*cursor;
 
 	listreverse(head);
 	cursor = *head;
@@ -47,10 +48,10 @@ t_node *stacking(t_node *stack, t_node **head, char path[])
 	return (stack);
 }
 
-void fill_list(t_node *stack, t_node **head, char options[])
+void			fill_list(t_node *stack, t_node **head, char options[])
 {
-	t_dir *dirent;
-    DIR *dir;
+	t_dir		*dirent;
+    DIR			*dir;
     
 	deleteList(head);
 	if(!(dir = opendir(stack->name)))
@@ -71,9 +72,9 @@ void fill_list(t_node *stack, t_node **head, char options[])
 	closedir(dir);
 }
 
-t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
+t_node			*print_stack(t_node *stack, t_node *head, char options[], char path[])
 {
-	t_node *cursor;
+	t_node		*cursor;
 	
 	cursor = stack;
 	while(cursor != NULL)
@@ -81,7 +82,7 @@ t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
 		ft_bzero(path, 1024);
 		fill_list(cursor, &head, options);
 		get_path(path, cursor->name);
-		get_filepath(&head, path, options);
+		get_filepath(&head, path);
 		MergeSort(&head, path, options);
 		if (options[3])
 			listreverse(&head);
@@ -90,19 +91,19 @@ t_node *print_stack(t_node *stack, t_node *head, char options[], char path[])
 		if(options[0])
 			print_all_long(head, path);
 		if(options[1])
-			stack = stacking(stack, &head, path);
+			stack = stacking(stack, &head);
 		deleteList(&head);
 	 	cursor = (options[1]) ? stack : cursor->next;
 	}
 	return(stack);
 }
 
-int main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
-    char options[5];
-	char path[1024];
-    t_node *head;
-	t_node *stack;
+    char		options[5];
+	char		path[1024];
+    t_node		*head;
+	t_node		*stack;
     
 	head = NULL;
 	stack = NULL;

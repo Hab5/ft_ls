@@ -57,20 +57,19 @@ void                    FrontBackSplit(t_node* source, t_node** frontRef, t_node
 void                    print_access(t_stat st);
 void                    print_id(t_pwd *pwd, t_grp *grp, t_stat st, int len[]);
 void                    print_date(char *ctime);
-void                    print_minmajor(t_node *cursor, int size, int len[]);
+void                    print_minmajor(t_node *cursor, int len[]);
 void                    print_link(t_node *head);
-void                    print_long(t_node *cursor, char *filename, int len[]);
+void                    print_long(t_node *cursor, int len[]);
 void                    print_all_long(t_node *head, char path[]);
 
-void                    padding(t_node *head, char path[], int len[]);
+void                    padding(t_node *head, int len[]);
 void                    padcheck(t_node *cursor, t_pwd *pwd, t_grp *grp, int len[]);
 void                    pudding(char *str, int len);
 
 void                    free_filestack(t_node **head);
-void                    get_filepath(t_node **head, char path[], char options[]);
+void                    get_filepath(t_node **head, char path[]);
 char                    *get_path(char path[], char *filename);
 void                    ft_pustrless(const char *str);
-t_node                  *grab_filepath(char path[], t_node *stack, t_node *head);
 void                    flags_error(char *current, int i);
 
 #endif

@@ -1,6 +1,6 @@
 #include "../include/ft_ls.h"
 
-void	print_access(t_stat st)
+void        print_access(t_stat st)
 {
 	ft_putchar((S_ISFIFO(st.st_mode)) ? 'p' : '\0');
 	ft_putchar((S_ISCHR(st.st_mode)) ? 'c' : '\0');
@@ -21,7 +21,7 @@ void	print_access(t_stat st)
 	ft_putstr("  ");
 }
 
-void print_id(t_pwd *pwd, t_grp *grp, t_stat st, int len[])
+void        print_id(t_pwd *pwd, t_grp *grp, t_stat st, int len[])
 {
     pwd = getpwuid(st.st_uid);
     grp = getgrgid(st.st_gid);
@@ -50,9 +50,9 @@ void print_id(t_pwd *pwd, t_grp *grp, t_stat st, int len[])
         }
 }
 
-void print_date(char *ctime)
+void        print_date(char *ctime)
 {
-    int i;
+    int     i;
     
     i = 0;
     ctime += 4;
@@ -61,7 +61,7 @@ void print_date(char *ctime)
     ft_putstr(" ");
 }
 
-void print_minmajor(t_node *cursor, int size, int len[])
+void        print_minmajor(t_node *cursor, int len[])
 {
 	int		min;
 	int		maj;
@@ -78,7 +78,7 @@ void print_minmajor(t_node *cursor, int size, int len[])
     ft_putnbr(minor(cursor->st.st_rdev));
 }
 
-void print_link(t_node *head)
+void        print_link(t_node *head)
 {
 	char	buf[1024];
 	int		len;

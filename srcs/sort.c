@@ -3,29 +3,11 @@
 #include<stdlib.h>
 #include <string.h>
 
-void get_filepath(t_node **head, char path[], char options[])
-{
-	t_node *lstcursor;
-	char *temp;
-
-	lstcursor = *head;
-    while(lstcursor != NULL)
-	{
-		temp = malloc(strlen(path) + strlen(lstcursor->name) + 1);
-        ft_strcpy(temp, path);
-        ft_strcat(temp, lstcursor->name);
-		lstcursor->path = temp;
-		stat(lstcursor->path, &lstcursor->st);
-		free(temp);
-		lstcursor = lstcursor->next;
-	}
-}
-
-int MergeSort(t_node** headRef, char path[], char options[])
+int			MergeSort(t_node** headRef, char path[], char options[])
 { 
-	t_node* head; 
-	t_node* a; 
-	t_node* b;
+	t_node	*head; 
+	t_node	*a; 
+	t_node	*b;
     
 	head = *headRef;
     if ((head == NULL) || (head->next == NULL)) 
@@ -41,9 +23,9 @@ int MergeSort(t_node** headRef, char path[], char options[])
     return (0);
 }
 
-t_node* SortedMerge(t_node* a, t_node* b) 
+t_node		*SortedMerge(t_node* a, t_node* b) 
 { 
-	t_node* result;
+	t_node	*result;
     
     result = NULL; 
   
@@ -64,9 +46,9 @@ t_node* SortedMerge(t_node* a, t_node* b)
 	return(result); 
 } 
 
-t_node* SortedMergeTime(t_node* a, t_node* b) 
+t_node		*SortedMergeTime(t_node* a, t_node* b) 
 { 
-	t_node* result;
+	t_node	*result;
     
     result = NULL; 
   
@@ -87,10 +69,10 @@ t_node* SortedMergeTime(t_node* a, t_node* b)
 	return(result); 
 } 
 
-void FrontBackSplit(t_node* source, t_node** frontRef, t_node** backRef) 
+void		FrontBackSplit(t_node* source, t_node** frontRef, t_node** backRef) 
 { 
-    t_node* fast; 
-	t_node* slow; 
+    t_node	*fast; 
+	t_node	*slow; 
 
     slow = source; 
     fast = source->next; 

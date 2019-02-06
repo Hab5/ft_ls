@@ -1,6 +1,6 @@
 #include "../include/ft_ls.h"
 
-void flags_error(char *current, int i)
+void			flags_error(char *current, int i)
 {
 	ft_putstr("\x1B[1;31m");
     ft_putstr("ls: illegal option -- ");
@@ -9,9 +9,9 @@ void flags_error(char *current, int i)
 	ft_putstr("\x1B[0m");
 }
 
-void ft_pustrless(const char *str)
+void			ft_pustrless(const char *str)
 {
-	int i;
+	int			i;
 
 	i = 0;
 	ft_putstr("\x1B[1;31m");
@@ -19,32 +19,37 @@ void ft_pustrless(const char *str)
 		ft_putchar(str[i++]);
 }
 
-char *get_path(char path[], char *filename)
+char			*get_path(char path[], char *filename)
 {
-	ft_strcat(path, filename);
-	ft_strcat(path, "/");
-	ft_pustrless(path);
-	ft_putstr(":\n\x1b[0m");
+	if(ft_strcmp(filename, ".") != 0)
+	{
+		ft_strcat(path, filename);
+		ft_strcat(path, "/");
+		ft_pustrless(path);
+		ft_putstr(":\n\x1b[0m");
+	}
 	return(path);
 }
 
-t_node *grab_filepath(char path[], t_node *stack, t_node *head)
+void			get_filepath(t_node **head, char path[])
 {
-	t_node *lstcursor;
+	t_node		*lstcursor;
+	char		*temp;
 
-	lstcursor = head;
+	lstcursor = *head;
     while(lstcursor != NULL)
 	{
-		lstcursor->path = malloc(strlen(path) + strlen(lstcursor->name) + 1);
-        ft_strcpy(lstcursor->path, path);
-        ft_strcat(lstcursor->path, lstcursor->name);
+		temp = malloc(strlen(path) + strlen(lstcursor->name) + 1);
+        ft_strcpy(temp, path);
+        ft_strcat(temp, lstcursor->name);
+		lstcursor->path = temp;
 		stat(lstcursor->path, &lstcursor->st);
+		free(temp);
 		lstcursor = lstcursor->next;
 	}
-	return (head);
 }
 
-void pop(t_node **head)
+void			pop(t_node **head)
 {
     if (*head != NULL) 
     {

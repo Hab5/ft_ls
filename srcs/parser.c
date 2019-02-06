@@ -1,8 +1,8 @@
 #include "../include/ft_ls.h"
 
-void check_options(char *options, char *current)
+void            check_options(char *options, char *current)
 {
-    int i;
+    int         i;
 
     i = 1;
     while(current[i] != '\0')
@@ -26,9 +26,9 @@ void check_options(char *options, char *current)
     }
 }
 
-int get_options(char *options, int argc, char **argv)
+int         get_options(char *options, int argc, char **argv)
 {
-    int i;
+    int     i;
     i = 1;
     ft_bzero(options, 5);
 
@@ -40,17 +40,17 @@ int get_options(char *options, int argc, char **argv)
     return (i);
 }
 
-int file_exist(char *filename)
+int         file_exist(char *filename)
 {
-    struct stat buf;
+    t_stat  buf;
     return (stat(filename, &buf) == 0);
 }
 
-t_node *get_param(int argc, char **argv, t_node **stack, char options[])
+t_node      *get_param(int argc, char **argv, t_node **stack, char options[])
 {
-    t_node *head;
-    int current;
-    t_stat st;
+    t_node  *head;
+    t_stat  st;
+    int     current;
 
     current = get_options(options, argc, argv);
     head = NULL;
@@ -76,9 +76,9 @@ t_node *get_param(int argc, char **argv, t_node **stack, char options[])
     return (head);
 }
 
-void free_filestack(t_node **head)
+void        free_filestack(t_node **head)
 {
-    t_node *cursor;
+    t_node  *cursor;
 
     cursor = *head;
     while(cursor != NULL)
