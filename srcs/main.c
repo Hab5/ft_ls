@@ -13,7 +13,7 @@ t_node			*output_filestack(t_node *head, char options[], char path[])
 	}
 	else if (options[0])
 	{
-		get_filepath(&head, path);
+		get_filepath(&head, path, options);
 		MergeSort(&head, path, options);
 		padding(head, len);
 		cursor = head;
@@ -36,8 +36,8 @@ t_node			*stacking(t_node *stack, t_node **head)
 	pop(&stack);
 	while(cursor != NULL)
     {
-		if(strcmp(cursor->name, ".") != 0 &&
-			strcmp(cursor->name, "..") != 0)
+		if(ft_strcmp(cursor->name, ".") != 0 &&
+			ft_strcmp(cursor->name, "..") != 0)
 		{
 		if(S_ISDIR(cursor->st.st_mode))
 			push(&stack, cursor->path);
@@ -82,7 +82,7 @@ t_node			*print_stack(t_node *stack, t_node *head, char options[], char path[])
 		ft_bzero(path, 1024);
 		fill_list(cursor, &head, options);
 		get_path(path, cursor->name);
-		get_filepath(&head, path);
+		get_filepath(&head, path, options);
 		MergeSort(&head, path, options);
 		if (options[3])
 			listreverse(&head);

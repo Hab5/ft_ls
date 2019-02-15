@@ -33,7 +33,7 @@ t_node		*SortedMerge(t_node* a, t_node* b)
     	return(b); 
 	else if (b == NULL) 
     	return(a); 
-	if (strcmp(a->name, b->name) < 0)
+	if (ft_strcmp(a->name, b->name) < 0)
 	{ 
     	result = a; 
     	result->next = SortedMerge(a->next, b); 

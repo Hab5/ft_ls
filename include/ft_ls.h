@@ -67,7 +67,7 @@ void                    padcheck(t_node *cursor, t_pwd *pwd, t_grp *grp, int len
 void                    pudding(char *str, int len);
 
 void                    free_filestack(t_node **head);
-void                    get_filepath(t_node **head, char path[]);
+void                    get_filepath(t_node **head, char path[], char options[]);
 char                    *get_path(char path[], char *filename);
 void                    ft_pustrless(const char *str);
 void                    flags_error(char *current, int i);

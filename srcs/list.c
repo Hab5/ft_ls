@@ -7,7 +7,7 @@ void            printlist(t_node* head, char path[])
     cursor = head;
     while(cursor != NULL)
     {
-        cursor->path = malloc(strlen(path) + strlen(cursor->name) + 1);
+        cursor->path = malloc(ft_strlen(path) + ft_strlen(cursor->name) + 1);
         ft_strcpy(cursor->path, path);
         ft_strcat(cursor->path, cursor->name);
         ft_putstr(cursor->name);

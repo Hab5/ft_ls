@@ -31,7 +31,7 @@ char			*get_path(char path[], char *filename)
 	return(path);
 }
 
-void			get_filepath(t_node **head, char path[])
+void			get_filepath(t_node **head, char path[], char options[])
 {
 	t_node		*lstcursor;
 	char		*temp;
@@ -39,11 +39,14 @@ void			get_filepath(t_node **head, char path[])
 	lstcursor = *head;
     while(lstcursor != NULL)
 	{
-		temp = malloc(strlen(path) + strlen(lstcursor->name) + 1);
+		temp = malloc(ft_strlen(path) + ft_strlen(lstcursor->name) + 1);
         ft_strcpy(temp, path);
         ft_strcat(temp, lstcursor->name);
 		lstcursor->path = temp;
-		stat(lstcursor->path, &lstcursor->st);
+		if(options[0])
+			lstat(lstcursor->path, &lstcursor->st);
+		if(!options[0])
+			stat(lstcursor->path, &lstcursor->st);
 		free(temp);
 		lstcursor = lstcursor->next;
 	}

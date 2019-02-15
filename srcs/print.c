@@ -42,7 +42,6 @@ void        padding(t_node *head, int len[])
     cursor = head;
     while(cursor != NULL)
     {
-        lstat(cursor->path, &cursor->st);
         pwd = getpwuid(cursor->st.st_uid);
         grp = getgrgid(cursor->st.st_gid);
         padcheck(cursor, pwd, grp, len);
@@ -91,7 +90,7 @@ void        print_all_long(t_node *head, char path[])
     padding(head, len);
     while(lstcursor != NULL)
 	{
-        lstcursor->path = malloc(strlen(path) + strlen(lstcursor->name) + 1);
+        lstcursor->path = malloc(ft_strlen(path) + ft_strlen(lstcursor->name) + 1);
         ft_strcpy(lstcursor->path, path);
         ft_strcat(lstcursor->path, lstcursor->name);
 		if (i++ == 0)

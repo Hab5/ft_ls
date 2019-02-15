@@ -47,4 +47,4 @@ fclean: clean
 		@rm -f $(NAME)
 		@echo "\x1b[31mSUCESSFULLY CLEANED FT_LS\x1b[31m"
 
-re: fclean all
+re: fclean all 
