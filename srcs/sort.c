@@ -1,91 +1,97 @@
-#include "../include/ft_ls.h"
-#include<stdio.h> 
-#include<stdlib.h>
-#include <string.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbellaic <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/26 14:15:54 by mbellaic          #+#    #+#             */
+/*   Updated: 2019/02/26 14:15:56 by mbellaic         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int			MergeSort(t_node** headRef, char path[], char options[])
-{ 
-	t_node	*head; 
-	t_node	*a; 
+#include "../include/ft_ls.h"
+
+int			merge_sort(t_node **head_ref, char path[], char options[])
+{
+	t_node	*head;
+	t_node	*a;
 	t_node	*b;
-    
-	head = *headRef;
-    if ((head == NULL) || (head->next == NULL)) 
-    	return (0); 
-	
-	FrontBackSplit(head, &a, &b);
-	MergeSort(&a, path, options); 
-	MergeSort(&b, path, options);
-	if(!options[4])
-		*headRef = SortedMerge(a, b);
-	if(options[4])
-		*headRef = SortedMergeTime(a, b);
-    return (0);
+
+	head = *head_ref;
+	if ((head == NULL) || (head->next == NULL))
+		return (0);
+	frontback_split(head, &a, &b);
+	merge_sort(&a, path, options);
+	merge_sort(&b, path, options);
+	if (!options[4])
+		*head_ref = sortedmerge(a, b);
+	if (options[4])
+		*head_ref = sortedmerge_time(a, b);
+	return (0);
 }
 
-t_node		*SortedMerge(t_node* a, t_node* b) 
-{ 
+t_node		*sortedmerge(t_node *a, t_node *b)
+{
 	t_node	*result;
-    
-    result = NULL; 
-  
-	if (a == NULL) 
-    	return(b); 
-	else if (b == NULL) 
-    	return(a); 
+
+	result = NULL;
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
 	if (ft_strcmp(a->name, b->name) < 0)
-	{ 
-    	result = a; 
-    	result->next = SortedMerge(a->next, b); 
-	} 
-	else
-	{ 
-    	result = b; 
-    	result->next = SortedMerge(a, b->next); 
-	} 
-	return(result); 
-} 
-
-t_node		*SortedMergeTime(t_node* a, t_node* b) 
-{ 
-	t_node	*result;
-    
-    result = NULL; 
-  
-	if (a == NULL) 
-    	return(b); 
-	else if (b == NULL) 
-    	return(a); 
-	if (a->st.st_mtime > b->st.st_mtime)
-	{ 
-    	result = a; 
-    	result->next = SortedMergeTime(a->next, b); 
-	} 
-	else
-	{ 
-    	result = b; 
-    	result->next = SortedMergeTime(a, b->next); 
+	{
+		result = a;
+		result->next = sortedmerge(a->next, b);
 	}
-	return(result); 
-} 
+	else
+	{
+		result = b;
+		result->next = sortedmerge(a, b->next);
+	}
+	return (result);
+}
 
-void		FrontBackSplit(t_node* source, t_node** frontRef, t_node** backRef) 
-{ 
-    t_node	*fast; 
-	t_node	*slow; 
+t_node		*sortedmerge_time(t_node *a, t_node *b)
+{
+	t_node	*result;
 
-    slow = source; 
-    fast = source->next; 
-    while (fast != NULL) 
-    { 
-        fast = fast->next; 
-        if (fast != NULL) 
-        { 
-            slow = slow->next; 
-            fast = fast->next; 
-        }
-    }
-    *frontRef = source; 
-    *backRef = slow->next; 
-    slow->next = NULL;  
+	result = NULL;
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+	if (a->st.st_mtime > b->st.st_mtime)
+	{
+		result = a;
+		result->next = sortedmerge_time(a->next, b);
+	}
+	else
+	{
+		result = b;
+		result->next = sortedmerge_time(a, b->next);
+	}
+	return (result);
+}
+
+void		frontback_split(t_node *source, t_node **frontref, t_node **backref)
+{
+	t_node	*fast;
+	t_node	*slow;
+
+	slow = source;
+	fast = source->next;
+	while (fast != NULL)
+	{
+		fast = fast->next;
+		if (fast != NULL)
+		{
+			slow = slow->next;
+			fast = fast->next;
+		}
+	}
+	*frontref = source;
+	*backref = slow->next;
+	slow->next = NULL;
 }
