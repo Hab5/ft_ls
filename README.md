@@ -1,2 +1,2 @@
 # ft_ls
-It's the 'ls' function. I know.
+LS with some options (-lRart)
